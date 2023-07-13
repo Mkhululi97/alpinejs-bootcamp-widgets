@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="greet.css" />
+    <!-- ***** ALPINEJS ***** -->
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <!-- ***** ALPINEJS ***** -->
+    <title>Greetings Widget Alpinejs</title>
+  </head>
+  <body>
+    <article>
+      <div class="container">
+        <div
+          x-data="{
+            lettersOnlyRegex:/^[a-zA-Z]+$/,
+            language:'',
+            output_str:'',
+            error_str:'',
+            greet(name_input){
+              if(this.language === 'isiZulu' && name_input !== ''){
+                this.output_str = `Sawobona ${name_input}`
+              }
+              if(this.language === 'isiXhosa' && name_input !== ''){
+                this.output_str = `Molo ${name_input}`
+              }
+              if(this.language === 'English' && name_input !== ''){
+                this.output_str = `Hello ${name_input}`
+              }
+              setTimeout(()=> this.output_str='', 4500)
+            },
+            error(input){
+              if(input === '' && this.language === ''){
+                this.error_str = 'Please enter your name and select a language'
+              }else if(input === ''){
+                this.error_str = 'Please enter your name'
+              }else if(!this.lettersOnlyRegex.test(input)){
+                this.error_str = 'Invalid name🚫. Please enter a valid name✅'
+              }else if(this.language === ''){
+                this.error_str = 'Please select a language'
+              }
+              setTimeout(()=> this.error_str='', 3500)
+            }
+          }"
+        >
+          <h1 class="greeting">Greetings from alpine👋🏽</h1>
+          <label class="inputName" for="name">Please Enter Your Name:</label>
+          <p class="error-text" x-text="error_str"></p>
+          <div class="flex">
+            <input
+              type="text"
+              placeholder="Enter your name"
+              class="text-input"
+              x-ref="input_name"
+            />
+          </div>
+          <div class="flex">
+            <button
+              class="btn greet-me-btn"
+              @click="
+              greet($refs.input_name.value),
+              error($refs.input_name.value),
+              $refs.input_name.value = ''
+            "
+            >
+              Greet Me
+            </button>
+          </div>
+          <div class="radio-btns">
+            <input
+              type="radio"
+              name="language"
+              value="isiZulu"
+              class="radio-btn"
+              @click="language='isiZulu'"
+            />
+            <label for="radio">isiZulu</label>
+            <input
+              type="radio"
+              name="language"
+              value="English"
+              class="radio-btn"
+              @click="language='English'"
+            />
+            <label for="radio">English</label>
+            <input
+              type="radio"
+              name="language"
+              value="isiXhosa"
+              class="radio-btn"
+              @click="language='isiXhosa'"
+            />
+            <label for="radio">isiXhosa</label>
+          </div>
+          <p class="output-str" x-text="output_str"></p>
+        </div>
+      </div>
+    </article>
+  </body>
+</html>
