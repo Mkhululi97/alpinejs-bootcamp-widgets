@@ -24,64 +24,72 @@
   <body>
     <!-- TEXT Calculate Bill Start -->
     <main>
-      <div class="container pt-4 w-50">
-        <div
-          x-data="{
-          input_str: '', 
-          bill_total: 0,
-          sms_count: 0,
-          call_count: 0,
-          add(){
-            let input_str_arr = this.input_str.split(',');
-            for(let i=0;i<input_str_arr.length;i++){
-              let smsORCallStr = input_str_arr[i].trim()
-              if(smsORCallStr==='sms'){this.sms_count+=1}
-              else if(smsORCallStr==='call'){this.call_count+=1}
-            };
-            this.bill_total = (this.sms_count*0.75 + this.call_count*2.75)
-            this.sms_count=0
-            this.call_count=0
-          }
-        }"
-        >
-          <h3>Calculate bill</h3>
-          <p>
-            Enter a string with 'call' or 'sms' seperated by commas. When the
-            Calculate button is pressed show the total phone bill for the string
-            entered.
-          </p>
-          <div class="">
-            <i>Calls costs R2.75 and a SMS R0.75</i>
-          </div>
-          <br />
-          <div class="">
-            <i
-              >If the total cost exceed R20.00 show the total cost in orange, if
-              over R30 show it in red.</i
+      <div class="container pt-4">
+        <div class="col col-md-6 mx-auto">
+          <div class="w-100">
+            <div
+              x-data="{
+            input_str: '', 
+            bill_total: 0,
+            sms_count: 0,
+            call_count: 0,
+            add(){
+              let input_str_arr = this.input_str.split(',');
+              for(let i=0;i<input_str_arr.length;i++){
+                let smsORCallStr = input_str_arr[i].trim()
+                if(smsORCallStr==='sms'){this.sms_count+=1}
+                else if(smsORCallStr==='call'){this.call_count+=1}
+              };
+              this.bill_total = (this.sms_count*0.75 + this.call_count*2.75)
+              this.sms_count=0
+              this.call_count=0
+            }
+          }"
             >
-          </div>
-          <hr />
-          <div class="row">
-            <h5>Enter bill string</h5>
-            <div class="d-flex align-items-center">
-              <textarea name="name" cols="40" x-ref="string_bill"></textarea>
-              <button
-                class="btn p-2 ms-2 bg-primary text-white"
-                @click="input_str=$refs.string_bill.value, add()"
-                x-bind:class="bill_total>=30 ? 'text-danger' : ''"
-              >
-                Calculate
-              </button>
-            </div>
-            <div>
-              <strong>Total amount:</strong>
-              <span class="total"
-                >R<span
-                  class="billTotal"
-                  x-text="bill_total.toFixed(2)"
-                  x-bind:class="bill_total>=30 ? 'text-danger' : bill_total>=20 ? 'text-warning' : ''"
-                ></span
-              ></span>
+              <h3>Calculate bill</h3>
+              <p>
+                Enter a string with 'call' or 'sms' seperated by commas. When
+                the Calculate button is pressed show the total phone bill for
+                the string entered.
+              </p>
+              <div class="">
+                <i>Calls costs R2.75 and a SMS R0.75</i>
+              </div>
+              <br />
+              <div class="">
+                <i
+                  >If the total cost exceed R20.00 show the total cost in
+                  orange, if over R30 show it in red.</i
+                >
+              </div>
+              <hr />
+              <div class="row">
+                <h5>Enter bill string</h5>
+                <div class="d-flex align-items-center">
+                  <textarea
+                    name="name"
+                    cols="40"
+                    x-ref="string_bill"
+                  ></textarea>
+                  <button
+                    class="btn p-2 ms-2 bg-primary text-white"
+                    @click="input_str=$refs.string_bill.value, add()"
+                    x-bind:class="bill_total>=30 ? 'text-danger' : ''"
+                  >
+                    Calculate
+                  </button>
+                </div>
+                <div>
+                  <strong>Total amount:</strong>
+                  <span class="total"
+                    >R<span
+                      class="billTotal"
+                      x-text="bill_total.toFixed(2)"
+                      x-bind:class="bill_total>=30 ? 'text-danger' : bill_total>=20 ? 'text-warning' : ''"
+                    ></span
+                  ></span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
